@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:multiple_image_camera/multiple_image_camera.dart';
 import 'package:reactive_image_picker/src/reactive_image_picker.dart';
 import 'package:reactive_image_picker/src/selected_file_view.dart';
 import 'package:reactive_image_picker/src/widget_popup_dialog.dart';
+import 'dart:io';
 
 import 'image_file.dart';
 
@@ -123,6 +125,8 @@ class ImagePickerWidget extends StatelessWidget {
           result = [file];
         }
         break;
+      case ImagePickerMode.cameraMultiImage:
+        return await _pickCameraMultiImage(context);
       case ImagePickerMode.cameraVideo:
         final file = await _pickCameraVideo();
         if (file != null) {
@@ -194,6 +198,27 @@ class ImagePickerWidget extends StatelessWidget {
     }
 
     return null;
+  }
+
+
+  Future<List<SelectedFile>> _pickCameraMultiImage(BuildContext context) async {
+    try {
+      final multiCameraImage = await MultipleImageCamera.capture(
+          context: context);
+      if (multiCameraImage.isNotEmpty) {
+        final imageFile = multiCameraImage.map(
+              (e) => SelectedFile.image(file: XFile(e.file.path)),
+        );
+
+        return imageFile.toList();
+      }
+    } on PlatformException catch (e) {
+      await processPickerError?.call(e);
+    } catch (e) {
+      await processPickerError?.call(e);
+    }
+
+    return [];
   }
 
   Future<List<SelectedFile>> _pickMultiGalleryImage() async {
@@ -331,15 +356,15 @@ class ImagePickerWidget extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Delete image"),
-          content: const Text("This action could not be undone"),
+          title: const Text("Supprimer la photo"),
+          content: const Text("Vous voulez vraiment supprimer cette photo"),
           actions: [
             TextButton(
-              child: const Text("CLOSE"),
+              child: const Text("Fermer"),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: const Text("CONFIRM"),
+              child: const Text("Confirmer"),
               onPressed: () {
                 _handleDeleteConfirm(file);
                 Navigator.of(context).pop();

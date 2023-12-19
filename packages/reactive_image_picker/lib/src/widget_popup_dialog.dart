@@ -20,7 +20,15 @@ Future<ImagePickerMode?> widgetPopupDialog(
                   if (mode.contains(ImagePickerMode.cameraImage))
                     ListTile(
                       leading: const Icon(Icons.photo_camera),
-                      title: const Text('Take photo'),
+                      title: const Text('Prendre une photo'),
+                      onTap: () => Navigator.of(context).pop(
+                        ImagePickerMode.cameraImage,
+                      ),
+                    ),
+                  if (mode.contains(ImagePickerMode.cameraMultiImage))
+                    ListTile(
+                      leading: const Icon(Icons.photo_camera),
+                      title: const Text('Prendre des photos'),
                       onTap: () => Navigator.of(context).pop(
                         ImagePickerMode.cameraImage,
                       ),
@@ -28,7 +36,7 @@ Future<ImagePickerMode?> widgetPopupDialog(
                   if (mode.contains(ImagePickerMode.galleryImage))
                     ListTile(
                       leading: const Icon(Icons.photo),
-                      title: const Text('Choose from library'),
+                      title: const Text('Choisir depuis la galerie'),
                       onTap: () => Navigator.of(context).pop(
                         ImagePickerMode.galleryImage,
                       ),
@@ -63,7 +71,7 @@ Future<ImagePickerMode?> widgetPopupDialog(
                     ),
                   ListTile(
                     leading: const Icon(Icons.clear),
-                    title: const Text('Cancel'),
+                    title: const Text('Annuler'),
                     onTap: Navigator.of(context).pop,
                   )
                 ],

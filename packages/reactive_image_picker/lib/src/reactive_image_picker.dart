@@ -16,6 +16,7 @@ enum ImagePickerMode {
   galleryMultiImage,
   galleryVideo,
   cameraVideo,
+  cameraMultiImage
 }
 
 typedef ImagePickCallback = void Function(
