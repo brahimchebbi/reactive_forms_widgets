@@ -200,14 +200,30 @@ class ImagePickerWidget extends StatelessWidget {
     return null;
   }
 
-
   Future<List<SelectedFile>> _pickCameraMultiImage(BuildContext context) async {
     try {
       final multiCameraImage = await MultipleImageCamera.capture(
-          context: context);
+          context: context,
+          customDoneButton: Container(
+            height: 70,
+            width: 150,
+            decoration: BoxDecoration(
+              color: Colors.white38,
+              borderRadius: BorderRadius.circular(100.0),
+            ),
+            child: const Center(
+              child: Text(
+                'Valider',
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+            ),
+          ));
       if (multiCameraImage.isNotEmpty) {
         final imageFile = multiCameraImage.map(
-              (e) => SelectedFile.image(file: XFile(e.file.path)),
+          (e) => SelectedFile.image(file: XFile(e.file.path)),
         );
 
         return imageFile.toList();

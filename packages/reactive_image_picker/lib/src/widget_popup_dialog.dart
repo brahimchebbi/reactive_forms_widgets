@@ -30,7 +30,7 @@ Future<ImagePickerMode?> widgetPopupDialog(
                       leading: const Icon(Icons.photo_camera),
                       title: const Text('Prendre des photos'),
                       onTap: () => Navigator.of(context).pop(
-                        ImagePickerMode.cameraImage,
+                        ImagePickerMode.cameraMultiImage,
                       ),
                     ),
                   if (mode.contains(ImagePickerMode.galleryImage))
