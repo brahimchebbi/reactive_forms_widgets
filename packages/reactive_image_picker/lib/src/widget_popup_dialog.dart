@@ -44,7 +44,7 @@ Future<ImagePickerMode?> widgetPopupDialog(
                   if (mode.contains(ImagePickerMode.galleryMultiImage))
                     ListTile(
                       leading: const Icon(Icons.photo_library),
-                      title: const Text('Choose multiple from library'),
+                      title: const Text('Choisir depuis la galerie'),
                       onTap: () => Navigator.of(context).pop(
                         ImagePickerMode.galleryMultiImage,
                       ),
